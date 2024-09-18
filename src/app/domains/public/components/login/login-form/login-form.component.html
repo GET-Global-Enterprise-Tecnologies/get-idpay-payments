@@ -1,0 +1,23 @@
+  <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h6>Iniciar sesión</h6>
+    <mat-form-field class="form__input">
+      <mat-label>Correo electrónico</mat-label>
+      <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+      @if (form.get('email')?.hasError('email') && !form.hasError('required')) {
+      <mat-error>Introduce una dirección de correo electrónico válida</mat-error>
+      }
+      @if (form.get('email')?.hasError('required')) {
+      <mat-error>Campo <strong>obligatorio</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="form__input">
+      <mat-label>Contraseña</mat-label>
+      <input type="text" matInput formControlName="password" placeholder="Ex. 123456789" maxlength="12">
+      @if (form.get('password')?.hasError('required')) {
+      <mat-error>Campo <strong>obligatoria</strong></mat-error>
+      }
+    </mat-form-field>
+    <section class="form__submit">
+      <button mat-flat-button [disabled]="!this.form.valid">Sign in</button>
+    </section>
+  </form>

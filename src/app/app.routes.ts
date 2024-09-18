@@ -2,18 +2,18 @@ import { Routes } from "@angular/router";
 
 export const routes: Routes = [
   {
-    path: "loader",
+    path: "/",
     loadComponent() {
-      return import("./domains/private/pages/loader/loader.component").then(
-        (m) => m.LoaderComponent
+      return import("./domains/public/pages/login/login.component").then(
+        (m) => m.LoginComponent
       );
     },
   },
   {
-    path: "login",
+    path: "loader",
     loadComponent() {
-      return import("./domains/public/pages/login/login.component").then(
-        (m) => m.LoginComponent
+      return import("./domains/private/pages/loader/loader.component").then(
+        (m) => m.LoaderComponent
       );
     },
   },
