@@ -17,6 +17,7 @@ import { Router } from "@angular/router";
   styleUrl: "./login-form.component.scss",
 })
 export class LoginFormComponent {
+  private router = inject(Router);
   user = {
     email: "software@globalenterprise.com.co",
     password: "softwaredemo",
@@ -25,10 +26,11 @@ export class LoginFormComponent {
     email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
   });
-  private router = inject(Router);
+  errorCredentials = false;
 
   onSubmit() {
     if (!this.form.valid) return;
+    this.errorCredentials = false;
     const succes = this.validateCredentials();
   }
 
@@ -38,6 +40,7 @@ export class LoginFormComponent {
       !(this.user.password === this.form.value.email)
     ) {
       this.resetForm();
+      this.errorCredentials = true;
       return;
     }
     this.router.navigateByUrl("/upload-load");

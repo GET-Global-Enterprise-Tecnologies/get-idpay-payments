@@ -17,6 +17,9 @@
       <mat-error>Campo <strong>obligatoria</strong></mat-error>
       }
     </mat-form-field>
+    @if (errorCredentials) {
+    <mat-error>Usuario y/o contraseña inválido</mat-error>
+    }
     <section class="form__submit">
       <button mat-flat-button [disabled]="!this.form.valid">Sign in</button>
     </section>
