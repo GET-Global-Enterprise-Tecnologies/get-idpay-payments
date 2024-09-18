@@ -9,4 +9,12 @@ export const routes: Routes = [
       );
     },
   },
+  {
+    path: "analyze-data",
+    loadComponent() {
+      return import(
+        "./domains/private/pages/analyze-data/analyze-data.component"
+      ).then((m) => m.AnalyzeDataComponent);
+    },
+  },
 ];
