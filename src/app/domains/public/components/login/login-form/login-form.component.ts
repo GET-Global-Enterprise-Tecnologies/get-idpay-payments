@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import {
-  FormControl,
+  FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -17,21 +17,31 @@ import { Router } from "@angular/router";
   styleUrl: "./login-form.component.scss",
 })
 export class LoginFormComponent {
-  private router = inject(Router);
   user = {
     email: "software@globalenterprise.com.co",
     password: "softwaredemo",
   };
-  form = new FormGroup({
-    email: new FormControl("", [Validators.required, Validators.email]),
-    password: new FormControl("", [Validators.required]),
-  });
+  form!: FormGroup;
   errorCredentials = false;
+
+  private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+
+  ngOnInit() {
+    this.initForm();
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required]],
+    });
+  }
 
   onSubmit() {
     if (!this.form.valid) return;
     this.errorCredentials = false;
-    const succes = this.validateCredentials();
+    this.validateCredentials();
   }
 
   validateCredentials() {
@@ -43,7 +53,7 @@ export class LoginFormComponent {
       this.errorCredentials = true;
       return;
     }
-    this.router.navigateByUrl("/upload-load");
+    this.router.navigateByUrl("/analyze-data");
   }
 
   resetForm() {

@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 import { MatTableModule } from "@angular/material/table";
 import { ReadCsvComponent } from "../../components/read-csv/read-csv.component";
+import { LoaderComponent } from "../loader/loader.component";
 
 export interface PeriodicElement {
   name: string;
@@ -25,11 +26,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: "app-analyze-data",
   standalone: true,
-  imports: [MatTableModule, ReadCsvComponent],
+  imports: [MatTableModule, ReadCsvComponent, LoaderComponent],
   templateUrl: "./analyze-data.component.html",
   styleUrl: "./analyze-data.component.scss",
 })
 export class AnalyzeDataComponent {
+  isLoading = signal<boolean>(false);
   displayedColumns: string[] = ["position", "name", "weight", "symbol"];
   dataSource = ELEMENT_DATA;
+
+  ngOnInit() {
+    this.isLoading.set(true);
+    setTimeout(() => {
+      this.isLoading.set(false);
+    }, 2000);
+  }
 }
