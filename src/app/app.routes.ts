@@ -9,4 +9,12 @@ export const routes: Routes = [
       );
     },
   },
+  {
+    path: "login",
+    loadComponent() {
+      return import("./domains/public/pages/login/login.component").then(
+        (m) => m.LoginComponent
+      );
+    },
+  },
 ];
