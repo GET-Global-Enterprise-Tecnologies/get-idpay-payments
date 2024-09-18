@@ -2,6 +2,8 @@
 <app-loader />
 }
 
+<app-header />
+
 <section class="container">
   @if(!viewData()) {
   <app-read-csv (dataResult)="refreshData($event)" />

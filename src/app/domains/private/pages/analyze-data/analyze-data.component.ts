@@ -1,4 +1,5 @@
 import { Component, signal } from "@angular/core";
+import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { ReadCsvComponent } from "../../components/read-csv/read-csv.component";
 import { TableDataComponent } from "../../components/table-data/table-data.component";
 import { LoaderComponent } from "../loader/loader.component";
@@ -6,7 +7,7 @@ import { LoaderComponent } from "../loader/loader.component";
 @Component({
   selector: "app-analyze-data",
   standalone: true,
-  imports: [ReadCsvComponent, LoaderComponent, TableDataComponent],
+  imports: [ReadCsvComponent, LoaderComponent, TableDataComponent, HeaderComponent],
   templateUrl: "./analyze-data.component.html",
   styleUrl: "./analyze-data.component.scss",
 })
