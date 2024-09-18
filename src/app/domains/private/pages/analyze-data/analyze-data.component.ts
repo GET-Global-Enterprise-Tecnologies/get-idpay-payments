@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MatTableModule } from "@angular/material/table";
+import { ReadCsvComponent } from "../../components/read-csv/read-csv.component";
 
 export interface PeriodicElement {
   name: string;
@@ -24,7 +25,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: "app-analyze-data",
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, ReadCsvComponent],
   templateUrl: "./analyze-data.component.html",
   styleUrl: "./analyze-data.component.scss",
 })
