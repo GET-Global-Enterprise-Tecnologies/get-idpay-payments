@@ -30,4 +30,8 @@ export class AnalyzeDataComponent {
       this.viewData.set(true);
     }, 4000);
   }
+
+  clearDataAction() {
+    this.viewData.set(false);
+  }
 }

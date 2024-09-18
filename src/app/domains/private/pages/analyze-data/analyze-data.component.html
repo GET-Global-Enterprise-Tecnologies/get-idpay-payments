@@ -6,6 +6,6 @@
   @if(!viewData()) {
   <app-read-csv (dataResult)="refreshData($event)" />
   } @else{
-  <app-table-data [dataView]="dataView()" />
+  <app-table-data [dataView]="dataView()" (clearDataAction)="clearDataAction()" />
   }
 </section>

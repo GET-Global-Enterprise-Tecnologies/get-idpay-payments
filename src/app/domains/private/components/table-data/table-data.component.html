@@ -65,3 +65,8 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<section class="container-buttons">
+    <button mat-button (click)="clearData()">Cancelar</button>
+    <button mat-flat-button (click)="saveData()">Procesar</button>
+</section>

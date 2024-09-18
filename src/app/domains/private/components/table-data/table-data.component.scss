@@ -1,0 +1,12 @@
+.container-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  margin-top: 32px;
+  gap: 10px;
+  flex-flow: row nowrap;
+
+  button {
+    width: 120px;
+  }
+}
