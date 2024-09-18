@@ -1,0 +1,67 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="process">
+    <th mat-header-cell *matHeaderCellDef> process. </th>
+    <td mat-cell *matCellDef="let element"> {{element.process}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="nit">
+    <th mat-header-cell *matHeaderCellDef> nit </th>
+    <td mat-cell *matCellDef="let element"> {{element.nit}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> date </th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> type </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="mount">
+    <th mat-header-cell *matHeaderCellDef> mount </th>
+    <td mat-cell *matCellDef="let element"> {{element.mount | currency }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="newDate">
+    <th mat-header-cell *matHeaderCellDef> newDate </th>
+    <td mat-cell *matCellDef="let element"> {{element.newDate}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="token">
+    <th mat-header-cell *matHeaderCellDef> token </th>
+    <td mat-cell *matCellDef="let element"> {{element.token}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="confim">
+    <th mat-header-cell *matHeaderCellDef> confirm </th>
+    <td mat-cell *matCellDef="let element"> {{element.confim}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sigla">
+    <th mat-header-cell *matHeaderCellDef> sigla </th>
+    <td mat-cell *matCellDef="let element"> {{element.sigla}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="desc">
+    <th mat-header-cell *matHeaderCellDef> desc </th>
+    <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

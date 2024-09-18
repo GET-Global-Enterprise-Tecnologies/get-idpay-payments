@@ -1,4 +1,4 @@
-import { Component, Output, signal } from "@angular/core";
+import { Component, output } from "@angular/core";
 import * as XLSX from "xlsx";
 
 @Component({
@@ -9,23 +9,17 @@ import * as XLSX from "xlsx";
   styleUrl: "./read-csv.component.scss",
 })
 export class ReadCsvComponent {
-  dataExcel = signal<any>([]);
-  dataResult = Output;
+  dataResult = output<unknown[]>();
 
   onFileChange(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = () => {
-      console.log(reader.result);
       const workBook = XLSX.read(reader.result, { type: "binary" });
-      console.log(workBook);
       const workSheetName = workBook.SheetNames;
-      console.log(workSheetName);
       const workSheet = workBook.Sheets[workSheetName[0]];
-      console.log(workSheet);
       const data = XLSX.utils.sheet_to_json(workSheet);
-      this.dataExcel.set(data);
-      console.log(this.dataExcel());
+      this.dataResult.emit(data);
     };
     reader.readAsText(file);
   }

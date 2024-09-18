@@ -18,6 +18,12 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
       justify-content: center;
       align-items: center;
       height: 100vh;
+      position: fixed;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      left: 0;
+      top: 0;
     }
   `,
 })
