@@ -1,7 +1,9 @@
 import { CurrencyPipe } from "@angular/common";
-import { Component, input, output } from "@angular/core";
+import { Component, inject, input, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
+import { MatDialog } from "@angular/material/dialog";
 import { MatTableModule } from "@angular/material/table";
+import { ModalInformationComponent } from "../../../shared/components/modal-information/modal-information.component";
 
 export interface PeriodicElement {
   process: number;
@@ -30,6 +32,8 @@ export class TableDataComponent {
   displayedColumns: string[] = [];
   dataSource!: PeriodicElement[];
 
+  readonly dialog = inject(MatDialog);
+
   ngOnInit() {
     this.setDataSource();
   }
@@ -46,6 +50,34 @@ export class TableDataComponent {
   }
 
   saveData() {
-    console.log("Save data");
+    this.dialog
+      .open(ModalInformationComponent, {
+        data: {
+          title: "Guardar Datos",
+          message: "¿Desea guardar los datos?",
+          action: "Enviar",
+        },
+      })
+      .afterClosed()
+      .subscribe((result: string) => {
+        if (result === "save") {
+          this.finishProcess();
+        }
+      });
+  }
+
+  finishProcess() {
+    this.dialog
+      .open(ModalInformationComponent, {
+        data: {
+          title: "Proceso Finalizado",
+          message: "El proceso ha finalizado correctamente",
+          action: "Terminar",
+        },
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.clearData();
+      });
   }
 }

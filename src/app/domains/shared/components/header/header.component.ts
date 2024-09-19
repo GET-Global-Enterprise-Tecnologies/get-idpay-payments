@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-header",
   standalone: true,
-  imports: [MatToolbarModule],
+  imports: [MatToolbarModule, RouterModule],
   template: `
     <mat-toolbar>
       <section class="logo">
@@ -15,6 +16,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
       <div class="spacer"></div>
 
       <button mat-button routerLink="/analyze-data">Inicio</button>
+      <button mat-button routerLink="/">Cerrar sesión</button>
     </mat-toolbar>
   `,
   styles: `
@@ -44,7 +46,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
       color: white;
       background-color: transparent;
       border: none;
-      with: 120px;
+      width: 120px;
       height: 56px;
       cursor: pointer;
     }

@@ -20,7 +20,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
       height: 100vh;
       position: fixed;
       width: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(256, 256, 256, 1);
       z-index: 9999;
       left: 0;
       top: 0;

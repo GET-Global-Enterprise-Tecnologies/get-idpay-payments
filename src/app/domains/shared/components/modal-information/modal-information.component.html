@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>{{informationModal().title}}</h2>
+<mat-dialog-content>{{informationModal().message}}</mat-dialog-content>
+<mat-dialog-actions>
+  @if(informationModal().action === 'Enviar') {
+    <button mat-button (click)="clearData()">Close</button>
+}
+
+  <button mat-button (click)="onNoClick()">{{informationModal().action}}</button>
+</mat-dialog-actions>

@@ -1,7 +1,7 @@
 import { Component, output } from "@angular/core";
-import * as XLSX from "xlsx";
-import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: "app-read-csv",
