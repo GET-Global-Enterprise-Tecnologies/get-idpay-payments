@@ -1,1 +1,14 @@
-<p>read-csv works!</p>
+<section class="container">
+  <mat-card class="upload-card" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+  <div class="upload-area" (click)="fileInput.click()">
+    @if(uploadedFile) {
+      <p>{{uploadedFile.name}}</p>
+    }
+    @if(!uploadedFile) {
+      <p>Arrastra y suelta el archivo aquí o haz clic para seleccionarlo</p>
+    }
+    <input type="file" #fileInput (change)="onFileSelected($event)" accept=".csv" hidden>
+  </div>
+  </mat-card>
+  <button mat-flat-button [disabled]="!uploadedFile" (click)="viewFile()">Ver</button>
+</section>
