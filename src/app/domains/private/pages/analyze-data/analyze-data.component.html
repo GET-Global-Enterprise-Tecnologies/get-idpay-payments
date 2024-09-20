@@ -5,6 +5,10 @@
 <app-header />
 
 <section class="container">
+
+
+    <img src="./logo.png" alt="Logo">
+
   @if(!viewData()) {
   <app-read-csv (dataResult)="refreshData($event)" />
   } @else{
