@@ -46,6 +46,7 @@ export class ReadCsvComponent {
       const workSheetName = workBook.SheetNames;
       const workSheet = workBook.Sheets[workSheetName[0]];
       const data = XLSX.utils.sheet_to_json(workSheet);
+      console.log(data);
       this.dataResult.emit(data);
     };
     reader.readAsText(this.uploadedFile as any);

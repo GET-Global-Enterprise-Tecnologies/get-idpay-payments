@@ -1,70 +1,112 @@
+
+<!-- <button mat-button (click)="addRow()">Agregar</button> -->
+ @if (!editMode) {
+   <button mat-flat-button (click)="editMode = !editMode">Editar</button>
+ } @else {
+   <button mat-button (click)="editMode = !editMode">Cancelar</button>
+   <button mat-flat-button (click)="editMode = !editMode">Guardar</button>
+ }
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Position Column -->
-  <ng-container matColumnDef="process">
-    <th mat-header-cell *matHeaderCellDef> process. </th>
-    <td mat-cell *matCellDef="let element"> {{element.process}} </td>
+  <ng-container matColumnDef="processId">
+    <th mat-header-cell *matHeaderCellDef> id del proceso. </th>
+    <td mat-cell *matCellDef="let element"> {{element.processId}}
+    </td>
   </ng-container>
 
 
-  <ng-container matColumnDef="nit">
-    <th mat-header-cell *matHeaderCellDef> nit </th>
-    <td mat-cell *matCellDef="let element"> {{element.nit}} </td>
+  <ng-container matColumnDef="originNit">
+    <th mat-header-cell *matHeaderCellDef> Nit de origen </th>
+    <td mat-cell *matCellDef="let element"> {{element.originNit}}
+    </td>
   </ng-container>
 
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> id </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  <ng-container matColumnDef="nameOriginator">
+    <th mat-header-cell *matHeaderCellDef> Nombre del originador </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameOriginator}}
+    </td>
   </ng-container>
 
 
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef> date </th>
-    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  <ng-container matColumnDef="originatorAccount">
+    <th mat-header-cell *matHeaderCellDef> cuenta del originador </th>
+    <td mat-cell *matCellDef="let element"> {{element.originatorAccount}}
+      @if(editMode) {
+        <mat-form-field appearance="outline">
+          <input matInput [(ngModel)]="element.originatorAccount" (change)="changeAccount($event, element)">
+        </mat-form-field>
+      }
+    </td>
   </ng-container>
 
 
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef> type </th>
-    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  <ng-container matColumnDef="originatorIdentification">
+    <th mat-header-cell *matHeaderCellDef> Identificación del originador </th>
+    <td mat-cell *matCellDef="let element"> {{element.originatorIdentification}}
+      @if(editMode) {
+        <mat-form-field appearance="outline" style="width: 180px;">
+          <input matInput [(ngModel)]="element.originatorIdentification" (change)="changeIdentification($event, element)">
+        </mat-form-field>
+      }
+    </td>
   </ng-container>
 
-  <ng-container matColumnDef="mount">
-    <th mat-header-cell *matHeaderCellDef> mount </th>
-    <td mat-cell *matCellDef="let element"> {{element.mount | currency }} </td>
+  <ng-container matColumnDef="effectiveDate">
+    <th mat-header-cell *matHeaderCellDef> Fecha Efectiva </th>
+    <td mat-cell *matCellDef="let element"> {{element.effectiveDate  }}
+      @if(editMode) {
+        <mat-form-field appearance="outline">
+          <input matInput [matDatepicker]="picker" [(ngModel)]="element.effectiveDate" (ngModelChange)="changeDate($event, element)">
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      }
+    </td>
+
+
   </ng-container>
 
-  <ng-container matColumnDef="newDate">
-    <th mat-header-cell *matHeaderCellDef> newDate </th>
-    <td mat-cell *matCellDef="let element"> {{element.newDate}} </td>
+  <ng-container matColumnDef="transactionNumber">
+    <th mat-header-cell *matHeaderCellDef> Numero de transacción </th>
+    <td mat-cell *matCellDef="let element"> {{element.transactionNumber}}
+    </td>
   </ng-container>
 
-  <ng-container matColumnDef="token">
-    <th mat-header-cell *matHeaderCellDef> token </th>
-    <td mat-cell *matCellDef="let element"> {{element.token}} </td>
+  <ng-container matColumnDef="totalTransactionValue">
+    <th mat-header-cell *matHeaderCellDef> Valor total de la transacción </th>
+    <td mat-cell *matCellDef="let element"> {{element.totalTransactionValue }}
+      @if(editMode) {
+        <mat-form-field appearance="outline" style="width: 180px;">
+          <input matInput [(ngModel)]="element.totalTransactionValue" (change)="changeValue($event, element)">
+        </mat-form-field>
+      }
+    </td>
   </ng-container>
 
-  <ng-container matColumnDef="confim">
-    <th mat-header-cell *matHeaderCellDef> confirm </th>
-    <td mat-cell *matCellDef="let element"> {{element.confim}} </td>
+  <ng-container matColumnDef="nameFile">
+    <th mat-header-cell *matHeaderCellDef> Nombre del archivo </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameFile}}
+    </td>
   </ng-container>
 
-  <ng-container matColumnDef="sigla">
-    <th mat-header-cell *matHeaderCellDef> sigla </th>
-    <td mat-cell *matCellDef="let element"> {{element.sigla}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="desc">
-    <th mat-header-cell *matHeaderCellDef> desc </th>
-    <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
+  <ng-container matColumnDef="lotDescription">
+    <th mat-header-cell *matHeaderCellDef> Descripción del lote </th>
+    <td mat-cell *matCellDef="let element"> {{element.lotDescription}}
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<section class="container-buttons">
+@if (!editMode) {
+  <section class="container-buttons">
     <button mat-button (click)="clearData()">Cancelar</button>
     <button mat-flat-button (click)="saveData()">Procesar</button>
-</section>
+  </section>
+}

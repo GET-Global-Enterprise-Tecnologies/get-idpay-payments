@@ -1,13 +1,12 @@
 export interface Table {
-  process: number;
-  nit: number;
-  id: number;
-  date: string;
-  type: number;
-  mount: number;
-  newDate: string;
-  token?: string;
-  confim: number | string;
-  sigla: string;
-  desc: string;
+  processId: number;
+  originNit: number;
+  nameOriginator: string;
+  originatorAccount: string;
+  originatorIdentification: number;
+  effectiveDate: string;
+  transactionNumber: string;
+  totalTransactionValue: number | string;
+  nameFile: string;
+  lotDescription: string;
 }

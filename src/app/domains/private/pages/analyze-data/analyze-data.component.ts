@@ -1,3 +1,5 @@
+import { DatePipe, registerLocaleData } from "@angular/common";
+import localeEs from "@angular/common/locales/es";
 import { Component, inject, signal } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { HeaderComponent } from "../../../shared/components/header/header.component";
@@ -7,6 +9,7 @@ import { Table } from "../../../shared/models/table.interface";
 import { ReadCsvComponent } from "../../components/read-csv/read-csv.component";
 import { TableDataComponent } from "../../components/table-data/table-data.component";
 import { LoaderComponent } from "../loader/loader.component";
+registerLocaleData(localeEs, "es-ES");
 
 @Component({
   selector: "app-analyze-data",
@@ -14,6 +17,7 @@ import { LoaderComponent } from "../loader/loader.component";
   imports: [ReadCsvComponent, LoaderComponent, TableDataComponent, HeaderComponent],
   templateUrl: "./analyze-data.component.html",
   styleUrl: "./analyze-data.component.scss",
+  providers: [DatePipe],
 })
 export class AnalyzeDataComponent {
   isLoading = signal<boolean>(false);
@@ -21,6 +25,7 @@ export class AnalyzeDataComponent {
   dataView = signal<unknown[]>([]);
 
   readonly dialog = inject(MatDialog);
+  private datePipe = inject(DatePipe);
 
   ngOnInit() {
     this.isLoading.set(true);
@@ -30,97 +35,59 @@ export class AnalyzeDataComponent {
   }
 
   refreshData(data: unknown[]) {
-    this.validateData(data as Table[]);
+    const dataFormatted = this.formatDate(data as Table[]);
+    this.validateData(dataFormatted);
     this.isLoading.set(true);
     setTimeout(() => {
       this.isLoading.set(false);
     }, 4000);
   }
 
+  formatDate(data: Table[]) {
+    return data.map((item) => {
+      const date = item.effectiveDate.split("/");
+      const newDate = new Date(`${date[2]}-${date[1]}-${date[0]}`).toISOString();
+
+      const options: Intl.NumberFormatOptions = {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      };
+
+      item.totalTransactionValue = new Intl.NumberFormat("es-CO", options).format(
+        Number(item.totalTransactionValue)
+      );
+
+      item.effectiveDate = this.datePipe.transform(
+        newDate,
+        "fullDate",
+        "+0430",
+        "es-ES"
+      ) as string;
+      return item;
+    });
+  }
+
   validateData(data: Table[]) {
-    debugger;
     if (data.length === 0) {
       this.modalInformation({
         title: "Error",
         message: "No se encontraron datos en el archivo",
-        action: "Cerrar",
+        action: "Aceptar",
       });
       return;
     }
 
-    const keys = Object.keys(data[0] as object);
-    if (keys.length > 11) {
-      // alert("El archivo debe contener 11 columnas");
-      this.modalInformation({
-        title: "Error",
-        message: "El archivo debe contener 11 columnas",
-        action: "Cerrar",
-      });
-      return;
-    }
-
-    const requiredKeys = [
-      "process",
-      "nit",
-      "id",
-      "date",
-      "type",
-      "mount",
-      "newDate",
-      "confim",
-      "sigla",
-      "desc",
-    ];
-    const missingKeys = requiredKeys.filter((key) => !keys.includes(key));
-    if (missingKeys.length > 0) {
-      this.modalInformation({
-        title: "Error",
-        message: `Faltan las siguientes columnas: ${missingKeys.join(", ")}`,
-        action: "Cerrar",
-      });
-      return;
-    }
-
-    const invalidData = data.filter((item) => {
-      return Object.values(item).some((value) => {
-        return value === null || value === undefined || value === "";
-      });
+    const invalidData3 = data.filter((item) => {
+      return item.totalTransactionValue === 0;
     });
 
-    if (invalidData.length > 0) {
+    if (invalidData3.length > 0) {
       this.modalInformation({
         title: "Error",
-        message: "Los datos no pueden estar vacíos",
-        action: "Cerrar",
-      });
-      return;
-    }
-
-    const invalidTypes = data.filter((item) => {
-      return Object.values(item).some((value) => {
-        return typeof value !== "number" && typeof value !== "string";
-      });
-    });
-
-    if (invalidTypes.length > 0) {
-      this.modalInformation({
-        title: "Error",
-        message: "Los datos deben ser de tipo string o number",
-        action: "Cerrar",
-      });
-      return;
-    }
-    let id = 0;
-    const invalidMount = data.filter((item) => {
-      id++;
-      return item.mount > 0;
-    });
-
-    if (invalidMount.length > 0) {
-      this.modalInformation({
-        title: "Error",
-        message: "El monto no puede ser positivo en la fila " + id,
-        action: "Cerrar",
+        message: "El monto no puede ser 0",
+        action: "Aceptar",
       });
       return;
     }
